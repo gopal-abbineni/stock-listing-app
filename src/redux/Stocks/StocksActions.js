@@ -2,9 +2,7 @@ import {
     FETCH_POPULAR_STOCKS_FAILURE,
     FETCH_POPULAR_STOCKS_SUCCESS,
     FETCH_POPULAR_STOCKS_REQUEST,
-    TAKE_BACKUP_STOCKS,
-    SELECT_POPULAR_STOCK,
-    RESET_STOCKS
+    SAVE_MY_STOCKS
 } from './StocksTypes';
 import axios from 'axios';
 import { IEXCloudClient } from "node-iex-cloud";
@@ -15,13 +13,6 @@ export const fetchPopularStocksRequest = () => {
     return {
         type: FETCH_POPULAR_STOCKS_REQUEST
     }
-}
-
-export const selectPopularStock = (name, isSeleceted) => {
-  return {
-      type: SELECT_POPULAR_STOCK,
-      payload: { name, isSeleceted}
-  }
 }
 
 export const fetchPopularStocksSuccess = res => {
@@ -39,22 +30,18 @@ export const fetchPopularStocksFailure = error => {
 }
 
 //MY STOCKS RELATED ACTIONS
-export const resetPopularStocks = () => {
+export const saveMyStocks = (selectedStocks) => {
   return {
-      type: RESET_STOCKS
+      type: SAVE_MY_STOCKS,
+      payload: selectedStocks
   }
-}
-
-export const takeBackUpStocks = () => {
-    return {
-        type: TAKE_BACKUP_STOCKS
-    }
 }
 
 export const fetchpopularStocks = () => {
     return function (dispatch, getState) {
         const popularStocksSymbols = ['PEGA', 'GOOGL', 'AAPL', 'FB', 'TSLA', 'ADBE', 'AMZN', 'EBAY', 'WMT', 'COST'];
         const popularStocks = getState().popularStocks;
+
         const iex = new IEXCloudClient(axios, {
             sandbox: false,
             publishable: "pk_51f3f67f4cbf4bebad4af0098b2581a0 ",

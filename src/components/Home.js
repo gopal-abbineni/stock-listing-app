@@ -8,12 +8,12 @@ import { NavLink } from 'react-router-dom';
 function Home() {
     console.log("Rendering Home");
 
-    const { popularStocks, error } = useSelector((state) => {return {
+    const { popularStocks, error, myStocks } = useSelector((state) => {return {
         popularStocks: state.popularStocks,
-        error: state.error
+        error: state.error,
+        myStocks: state.myStocks
     }});
     const dispatch = useDispatch();
-    const mystocks = Object.keys(popularStocks).filter((value, index) => popularStocks[value].isSelected);
     
     useEffect(() => {
         dispatch(fetchpopularStocks());
@@ -22,10 +22,10 @@ function Home() {
     return (
         <React.Fragment>
             {/* Render mystocks stocks */}
-            {mystocks.length > 0 && (<Container fluid={true} className="stock-container">
+            {myStocks.length > 0 && (<Container fluid={true} className="stock-container">
                 <h5>My Stocks</h5>
                 <Row className="justify-content-center justify-content-lg-start">
-                    {mystocks.slice(0, 3).map((value, index) => {
+                    {myStocks.slice(0, 3).map((value, index) => {
                         return <StockCard key={index} stock={popularStocks[value]} />
                     })}
                 </Row>

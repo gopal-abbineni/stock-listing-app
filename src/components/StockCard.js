@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Card, Row, Col, Form } from 'react-bootstrap';
 
 function StockCard(Props) {
     console.log("Rendering StockCard", Props.stock.symbol);
+
+    const [stockSelected, setStockSelected] = React.useState(Props.isSelected || false);
+
+    const stockChecked = useCallback((e) => {
+        Props.onSelect(e.target.name, e.target.checked);
+        setStockSelected(e.target.checked,[]);
+    },[])
+
     return (
-        <Card border={Props.isSelectionEnabled && Props.stock.isSelected ? "success" : "dark"} style={{ width: '25rem', margin: '10px' }}>
+        <Card border={Props.isSelectionEnabled && stockSelected ? "success" : "dark"} style={{ width: '25rem', margin: '10px' }}>
             <Card.Body>
                 <Card.Title style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <b>{Props.stock.symbol}</b>
                     {Props.isSelectionEnabled && (
-                        <Form.Check type="checkbox" name={Props.stock.symbol} checked={Props.stock.isSelected || false} onChange={Props.onSelect} />
+                        <Form.Check type="checkbox" name={Props.stock.symbol} checked={stockSelected} onChange={stockChecked} />
                     )}
                 </Card.Title>
                 <Row>

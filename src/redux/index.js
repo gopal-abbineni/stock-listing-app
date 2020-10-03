@@ -1,9 +1,7 @@
 export {
     fetchPopularStocksFailure,
     fetchPopularStocksRequest,
-    fetchPopularStocksSuccess, 
-    takeBackUpStocks,
+    fetchPopularStocksSuccess,
     fetchpopularStocks,
-    selectPopularStock,
-    resetPopularStocks
+    saveMyStocks
 } from './Stocks/StocksActions';

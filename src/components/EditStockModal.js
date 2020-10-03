@@ -2,41 +2,38 @@ import React, { useEffect, useCallback } from 'react';
 import { Row, Button, Modal, Container } from 'react-bootstrap';
 import StockCard from './StockCard';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchpopularStocks, selectPopularStock, takeBackUpStocks, resetPopularStocks } from '../redux';
+import { fetchpopularStocks, saveMyStocks } from '../redux';
 
 
 function EditStockModal(props) {
     console.log("Rendering EditStockModal");
-
-    const popularStocks = useSelector((state) => state.popularStocks);
-
+    
+    let selected = {}
+    const {popularStocks, myStocks} = useSelector((state) => { return {
+        popularStocks: state.popularStocks,
+        myStocks: state.myStocks
+    }});
+    
     const dispatch = useDispatch();
 
     useEffect(() => {
+        myStocks.map((value, index)=>{
+            selected[value] = true; 
+        })
         dispatch(fetchpopularStocks());
     }, [dispatch]);
 
-
-    useEffect(() => {
-        dispatch(takeBackUpStocks());
-    }, [dispatch]);
-
-    const handleChange = useCallback((e) => {
-        e.stopPropagation();
-        const item = e.target.name;
-        const isChecked = e.target.checked;
-        dispatch(selectPopularStock(item, isChecked));
-    },[]);
-
-    const resetSelectedStocks = useCallback((e) => {
-        props.onHide();
-        dispatch(resetPopularStocks());
-        dispatch(takeBackUpStocks());
+    const handleChange = useCallback((item, isChecked) => {
+        if(isChecked){
+            selected[item] = isChecked;
+        } else {
+            delete selected[item];
+        }
     },[]);
 
     const saveSelectedStocks = useCallback((e) => {
         props.onHide();
-        dispatch(takeBackUpStocks());
+        dispatch(saveMyStocks(Object.keys(selected)))
     },[]);
 
     return (
@@ -55,13 +52,13 @@ function EditStockModal(props) {
                 <Container>
                     <Row className="justify-content-center">
                         {Object.keys(popularStocks).map((value, index) => {
-                            return (<StockCard isSelectionEnabled={true} key={index} stock={popularStocks[value]} onSelect={handleChange} />)
+                            return (<StockCard isSelectionEnabled={true} key={index} stock={popularStocks[value]} isSelected={myStocks.indexOf(value)!=-1} onSelect={handleChange} />)
                         })}
                     </Row>
                 </Container>
             </Modal.Body>
             <Modal.Footer style={{ justifyContent: 'space-between' }}>
-                <Button variant="secondary" onClick={resetSelectedStocks} >
+                <Button variant="secondary" onClick={props.onHide} >
                     Cancel
                 </Button>
                 <Button variant="primary" onClick={saveSelectedStocks}>

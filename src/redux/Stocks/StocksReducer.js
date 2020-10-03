@@ -4,13 +4,15 @@ import {
     FETCH_POPULAR_STOCKS_REQUEST,
     TAKE_BACKUP_STOCKS,
     RESET_STOCKS,
-    SELECT_POPULAR_STOCK
+    SELECT_POPULAR_STOCK,
+    SAVE_MY_STOCKS
 } from './StocksTypes';
 
 const initialState = {
     isLoading: false,
     popularStocks: {},
     backUppopularStocks: {},
+    myStocks: [],
     error: '',
     stocksUpdatedAt: ''
 }
@@ -36,28 +38,11 @@ const popularStockReducer = (state = initialState, action) => {
             error: action.payload
         }
 
-        case TAKE_BACKUP_STOCKS: return {
+        case SAVE_MY_STOCKS: return {
             ...state,
-            backUppopularStocks: {...state.popularStocks}
+            myStocks: action.payload
         }
-
-        case RESET_STOCKS: return {
-            ...state,
-            popularStocks: {...state.backUppopularStocks},
-            backUppopularStocks: {}
-        }
-
-        case SELECT_POPULAR_STOCK: return {
-            ...state,
-            popularStocks: {
-                ...state.popularStocks,
-                [action.payload.name]: {
-                    ...state.popularStocks[action.payload.name],
-                    isSelected: action.payload.isSeleceted
-                }
-            }
-        }
-
+        
         default: return state
     }
 }
