@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Clone repo:
 
 ```bash
-$ git clone https://git.pega.io/scm/~abbig/stocklistingapp.git
+$ git clone https://github.com/gopal-abbineni/stock-listing-app.git
 ```
 
 Install node_modules:
