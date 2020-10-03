@@ -1,22 +1,19 @@
 import React, { useEffect } from 'react';
 import { Row, Container, Button } from 'react-bootstrap';
 import StockCard from './StockCard';
-
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchpopularStocks, fetchPopularStocksSuccess } from '../redux';
-
+import { fetchpopularStocks } from '../redux';
 import { NavLink } from 'react-router-dom';
 
 function Home() {
 
     const { popularStocks = {}, error = '' } = useSelector((state) => state);
     const dispatch = useDispatch();
-
+    const mystocks = Object.keys(popularStocks).filter((value, index) => popularStocks[value].isSelected);
+    
     useEffect(() => {
         dispatch(fetchpopularStocks());
     }, [dispatch]);
-
-    const mystocks = Object.keys(popularStocks).filter((value, index) => popularStocks[value].isSelected);
 
     return (
         <React.Fragment>

@@ -10,7 +10,6 @@ import NotFound from './NotFound';
 import Home from './Home';
 import Navigationbar from './Navigationbar';
 import MyStocks from './MyStocks'
-
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 

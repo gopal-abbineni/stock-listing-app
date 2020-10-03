@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Nav, Navbar, Form } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-
 import { useSelector } from 'react-redux';
 
 function Navigationbar(props) {
 
     const [time, setTime] = useState(0);
-
     const stocksUpdatedAt = useSelector(state => state.stocksUpdatedAt);
 
     useEffect(() => {
@@ -19,8 +17,8 @@ function Navigationbar(props) {
 
     const getTimeString = (date) => {
 
-        var seconds = Math.floor((new Date() - new Date(date)) / 1000);
-        var interval = seconds / 31536000;
+        let seconds = Math.floor((new Date() - new Date(date)) / 1000);
+        let interval = seconds / 31536000;
         if (interval > 1) {
             return Math.floor(interval) + " years";
         }

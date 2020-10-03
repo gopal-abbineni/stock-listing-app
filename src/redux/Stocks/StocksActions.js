@@ -66,7 +66,7 @@ export const fetchpopularStocks = () => {
                 dispatch(fetchPopularStocksFailure("Failed to fetch the latest stocks"));
                 return;
             }
-            let filteredResponseObj =  Object.keys(res).reduce((obj, key) => {
+            const filteredResponseObj =  Object.keys(res).reduce((obj, key) => {
                 obj[key] = {
                     symbol: res[key].quote.symbol,
                     companyName: res[key].quote.companyName,

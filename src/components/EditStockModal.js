@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { Row, Button, Modal, Container } from 'react-bootstrap';
 import StockCard from './StockCard';
-
-
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchpopularStocks, selectPopularStock, takeBackUpStocks, resetPopularStocks } from '../redux';
 
