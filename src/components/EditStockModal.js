@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Row, Button, Modal, Container } from 'react-bootstrap';
 import StockCard from './StockCard';
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,8 +6,9 @@ import { fetchpopularStocks, selectPopularStock, takeBackUpStocks, resetPopularS
 
 
 function EditStockModal(props) {
+    console.log("Rendering EditStockModal");
 
-    const { popularStocks = {} } = useSelector((state) => state);
+    const popularStocks = useSelector((state) => state.popularStocks);
 
     const dispatch = useDispatch();
 
@@ -20,23 +21,23 @@ function EditStockModal(props) {
         dispatch(takeBackUpStocks());
     }, [dispatch]);
 
-    const handleChange = (e) => {
+    const handleChange = useCallback((e) => {
         e.stopPropagation();
         const item = e.target.name;
         const isChecked = e.target.checked;
         dispatch(selectPopularStock(item, isChecked));
-    }
+    },[]);
 
-    const resetSelectedStocks = (e) => {
+    const resetSelectedStocks = useCallback((e) => {
         props.onHide();
         dispatch(resetPopularStocks());
         dispatch(takeBackUpStocks());
-    }
+    },[]);
 
-    const saveSelectedStocks = (e) => {
+    const saveSelectedStocks = useCallback((e) => {
         props.onHide();
         dispatch(takeBackUpStocks());
-    }
+    },[]);
 
     return (
         <Modal
@@ -71,4 +72,4 @@ function EditStockModal(props) {
     );
 }
 
-export default EditStockModal;
+export default React.memo(EditStockModal);

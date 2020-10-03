@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Row, Col, Form } from 'react-bootstrap';
 
 function StockCard(Props) {
-
+    console.log("Rendering StockCard", Props.stock.symbol);
     return (
         <Card border={Props.isSelectionEnabled && Props.stock.isSelected ? "success" : "dark"} style={{ width: '25rem', margin: '10px' }}>
             <Card.Body>
@@ -41,4 +41,4 @@ function StockCard(Props) {
     );
 }
 
-export default StockCard;
+export default React.memo(StockCard);

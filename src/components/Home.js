@@ -6,8 +6,12 @@ import { fetchpopularStocks } from '../redux';
 import { NavLink } from 'react-router-dom';
 
 function Home() {
+    console.log("Rendering Home");
 
-    const { popularStocks = {}, error = '' } = useSelector((state) => state);
+    const { popularStocks, error } = useSelector((state) => {return {
+        popularStocks: state.popularStocks,
+        error: state.error
+    }});
     const dispatch = useDispatch();
     const mystocks = Object.keys(popularStocks).filter((value, index) => popularStocks[value].isSelected);
     
@@ -45,4 +49,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default React.memo(Home);

@@ -4,16 +4,17 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function Navigationbar(props) {
+    console.log("Rendering Navigationbar");
 
     const [time, setTime] = useState(0);
     const stocksUpdatedAt = useSelector(state => state.stocksUpdatedAt);
 
     useEffect(() => {
-        const interval = setInterval(() => setTime(Date.now()), 1000);
+        const interval = setInterval(() => setTime(getTimeString(stocksUpdatedAt)), 1000);
         return () => {
             clearInterval(interval);
         };
-    }, []);
+    }, [time]);
 
     const getTimeString = (date) => {
 
@@ -38,10 +39,11 @@ function Navigationbar(props) {
         if (interval > 1) {
             return Math.floor(interval) + " minutes";
         }
-        if (seconds <= 1) {
-            return "a few seconds"
-        }
-        return Math.floor(seconds) + " seconds";
+        // if (seconds <= 1) {
+        //     return "a few seconds"
+        // }
+        // return Math.floor(seconds) + " seconds";
+        return "a few seconds"
     }
 
     return (
@@ -55,7 +57,7 @@ function Navigationbar(props) {
                 </Nav>
                 <Form inline>
                     <Nav className="mr-auto">
-                        {stocksUpdatedAt && <Nav.Link >Updated: <span>{getTimeString(stocksUpdatedAt)}</span> ago</Nav.Link>}
+                        {stocksUpdatedAt && <Nav.Link >Updated: <span>{time}</span> ago</Nav.Link>}
                     </Nav>
                 </Form>
             </Navbar.Collapse>
@@ -63,4 +65,4 @@ function Navigationbar(props) {
     );
 }
 
-export default Navigationbar;
+export default React.memo(Navigationbar);

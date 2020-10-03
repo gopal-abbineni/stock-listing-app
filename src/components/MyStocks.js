@@ -5,9 +5,10 @@ import { useSelector } from 'react-redux';
 import EditStockModal from './EditStockModal';
 
 function MyStocks(props) {
+    console.log("Rendering MyStocks");
 
     const [modalShow, setModalShow] = React.useState(false);
-    const { popularStocks = {} } = useSelector((state) => state);
+    const  popularStocks = useSelector((state) => state.popularStocks);
 
     return (
         <React.Fragment>
@@ -34,10 +35,10 @@ function MyStocks(props) {
                             </Row>
                         </React.Fragment>
                     )}
-                <EditStockModal show={modalShow} onHide={() => setModalShow(false)} />
+                {modalShow && <EditStockModal show={modalShow} onHide={() => setModalShow(false)} />}
             </Container>
         </React.Fragment>
     );
 }
 
-export default MyStocks;
+export default React.memo(MyStocks);
