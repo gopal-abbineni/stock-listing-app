@@ -61,8 +61,7 @@ export const fetchpopularStocks = () => {
                     week52High: res[key].quote.week52High,
                     week52Low: res[key].quote.week52Low,
                     // change: res[key].quote.change,
-                    // changePercent: res[key].quote.changePercent,
-                    isSelected: popularStocks[key] && popularStocks[key].isSelected
+                    // changePercent: res[key].quote.changePercent
                 }
                 return obj;
             }, {});
