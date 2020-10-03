@@ -19,3 +19,9 @@ To start devlopment server:
 ```bash
 $ npm run start
 ```
+
+## To Do
+- [ ] Write tests
+- [ ] Authentication
+- [ ] Storing state in DB instead of session storage
+- [ ] Server side rendering
